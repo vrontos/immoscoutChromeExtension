@@ -2,7 +2,7 @@
 
 This Chrome extension adds a small popup to Immobilienscout24 expose pages, displaying light indicators for various property features. The indicators are color-coded: green for desirable features (e.g., parking, balcony) and red for potentially undesirable ones (e.g., rented, old building, in need of renovation). It also shows additional information like price per square meter and "Hausgeld".
 
-![Screenshot of the extension](screenshot.png)
+![Screenshot of the extension](pic.png)
 
 ## Features
 
