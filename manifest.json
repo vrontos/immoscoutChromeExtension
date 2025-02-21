@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "immoscoutChromeExtension",
+    "version": "1.0",
+    "description": "Shows multiple light indicators in a popup based on listing properties.",
+    "content_scripts": [
+      {
+        "matches": ["*://*.immobilienscout24.de/expose/*"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+    ]
+  }
+  
