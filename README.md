@@ -2,20 +2,31 @@
 
 This Chrome extension adds a small popup to Immobilienscout24 expose pages, displaying light indicators for various property features. The indicators are color-coded: green for desirable features (e.g., parking, balcony) and red for potentially undesirable ones (e.g., rented, old building, in need of renovation). It also shows additional information like price per square meter and "Hausgeld".
 
-![Screenshot of the extension](screenshot.png)
+![Screenshot of the extension](screenshot.png)  *(Replace screenshot.png with the actual filename)*
 
 ## Features
 
 * **Real-time Indicators:** Dynamically analyzes the current Immobilienscout24 page and shows indicators for:
-    * **Parking availability:** Checks for keywords like "Garage," "Stellplatz," or "Parkplatz" in the title, description, garage label, garage value, and equipment sections.
-    * **Balcony:** Checks for the presence of a balcony element on the page.
-    * **Fitted kitchen:** Checks for the presence of a fitted kitchen element on the page.
-    * **No commission ("Provisionsfrei"):**  Looks for mentions of "Maklerprovision" and verifies if the listed commission is 0€.
-    * **Rented status:** Looks for keywords like "Kapitalanlage," "Geldanlage," "Immobilienanlage," "vermietet," "Mietverhältnis," or "Mieteinnahmen" in the title and description.
-    * **Old building ("Altbau"):** Checks for the keyword "Altbau" in the title and description.
-    * **Top floor apartment ("Dachgeschoss"):** Checks for the keyword "Dachgeschoss" or "Dach" in the title, description, and the "Typ" element.
-    * **In need of renovation ("Renovierungsbedürftig"):** Checks for keywords like "renovierungsbedürftig" or "renovierungsbeduerftig" in the "Objektzustand" element.
-* **Additional Information:** Displays price per square meter and "Hausgeld".
+    * **Parking availability:** Searches for keywords like "Garage," "Stellplatz," or "Parkplatz" within the following elements:
+        * `expose-title` (property title element)
+        * `.is24qa-objektbeschreibung` (description element)
+        * `.is24qa-garage-stellplatz-label` (garage label element)
+        * `.is24qa-ausstattung` (equipment element)
+    * **Balcony:** Checks for the presence of the `.is24qa-balkon-terrasse-label` element.
+    * **Kitchen:** Checks for the presence of the `.is24qa-einbaukueche-label` element.
+    * **No commission ("Provisionsfrei"):**  Locates containers with the class `legend-row-marker-container` that contain "Maklerprovision". Then it checks the last `.align-right.number-width` element within the parent of that container. If the text content of that element is a price of 0€, it's considered "Provisionsfrei".
+    * **Rented status:** Searches for keywords like "Kapitalanlage," "Geldanlage," "Immobilienanlage," "vermietet," "Mietverhältnis," or "Mieteinnahmen" within the following elements:
+        * `expose-title` (property title element)
+        * `.is24qa-objektbeschreibung` (description element)
+    * **Old building ("Altbau"):** Searches for the keyword "Altbau" within the following elements:
+        * `expose-title` (property title element)
+        * `.is24qa-objektbeschreibung` (description element)
+    * **Top floor apartment ("Dachgeschoss"):** Searches for the keyword "Dachgeschoss" or "Dach" within the following elements:
+        * `expose-title` (property title element)
+        * `.is24qa-objektbeschreibung` (description element)
+        * `dd.is24qa-typ.grid-item.three-fifths` (property type element)
+    * **In need of renovation ("Renovierungsbedürftig"):** Searches for keywords like "renovierungsbedürftig" or "renovierungsbeduerftig" within the `dd.is24qa-objektzustand.grid-item.three-fifths` (property condition element).
+* **Additional Information:** Displays price per square meter (found in `.is24qa-kaufpreis-main-label.is24-label.font-s span`) and "Hausgeld" (found in `dd.is24qa-hausgeld.grid-item.three-fifths`).
 * **Golden Notification:** If all positive indicators are present and all negative indicators are absent, the page title gets a 🌟 and the favicon becomes gold.
 * **Non-intrusive:** The popup is small and positioned out of the way.
 
